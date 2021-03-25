@@ -1,8 +1,10 @@
 import { Container, Typography } from "@material-ui/core";
 import React from "react";
 import Link from "next/link";
+import getBooks from "../api/getBooks";
 
-const BooksPage = () => {
+const BooksPage = (props) => {
+  console.log(props);
   return (
     <Container>
       <Typography>Books Page</Typography>
@@ -18,5 +20,15 @@ const BooksPage = () => {
     </Container>
   );
 };
+
+export async function getStaticProps(params) {
+  const data = await getBooks();
+
+  return {
+    props: {
+      ...data,
+    },
+  };
+}
 
 export default BooksPage;
