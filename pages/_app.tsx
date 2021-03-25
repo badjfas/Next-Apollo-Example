@@ -6,7 +6,6 @@ import theme from "../theme";
 
 function MyApp(props) {
   const { Component, pageProps } = props;
-  const apolloClient = useApollo(pageProps);
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
