@@ -1,5 +1,4 @@
 const { ApolloServer, gql } = require("apollo-server");
-
 const books = [
   {
     title: "The Awakening",
@@ -26,11 +25,24 @@ const typeDefs = gql`
   type Query {
     books: [Book]
   }
+
+  type Mutation {
+    insertBook(title: String, author: String): Book
+  }
 `;
 
 const resolvers = {
   Query: {
     books: () => books,
+  },
+  Mutation: {
+    insertBook: async (a, b, c) => {
+      console.log(a, b, c);
+      return await {
+        title: b.title,
+        author: b.author,
+      };
+    },
   },
 };
 
