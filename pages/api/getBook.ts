@@ -1,19 +1,21 @@
-import { gql, NormalizedCacheObject, ApolloClient } from "@apollo/client";
+import { ApolloClient, gql, NormalizedCacheObject } from "@apollo/client";
 import { addApolloState, initializeApollo } from "../../lib/client";
-
-export default async () => {
+export default async (id: string) => {
   const apollo: ApolloClient<NormalizedCacheObject> = initializeApollo();
 
   const { data } = await apollo.query({
     query: gql`
-      query books {
-        books {
+      query book($id: String) {
+        book(id: $id) {
           id
           title
           author
         }
       }
     `,
+    variables: {
+      id,
+    },
   });
 
   return addApolloState(apollo, {

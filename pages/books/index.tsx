@@ -5,7 +5,7 @@ import getBooks from "../api/getBooks";
 import { gql, useMutation } from "@apollo/client";
 import { Book } from "../../server/interface";
 
-const BooksPage = (props) => {
+const BooksPage = (props: Book) => {
   const [exampleMutation] = useMutation(
     gql`
       mutation insertBook($title: String, $author: String) {
@@ -41,16 +41,19 @@ const BooksPage = (props) => {
         Go to 3
       </Link>
 
-      <Button onClick={() => onClick({ author: "테스트", title: "뮤테이션" })}>
+      <Button
+        onClick={() =>
+          onClick({ id: "1", author: "테스트", title: "뮤테이션" })
+        }
+      >
         Mutation
       </Button>
     </Container>
   );
 };
 
-export async function getStaticProps(params) {
+export async function getStaticProps(params: any) {
   const data = await getBooks();
-
   return {
     props: {
       ...data,

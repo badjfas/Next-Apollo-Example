@@ -1,10 +1,12 @@
 const { ApolloServer, gql } = require("apollo-server");
 const books = [
   {
+    id: "1",
     title: "The Awakening",
     author: "Kate Chopin",
   },
   {
+    id: "2",
     title: "City of Glass",
     author: "Paul Auster",
   },
@@ -15,6 +17,7 @@ const typeDefs = gql`
 
   # This "Book" type defines the queryable fields for every book in our data source.
   type Book {
+    id: String
     title: String
     author: String
   }
@@ -24,6 +27,7 @@ const typeDefs = gql`
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
     books: [Book]
+    book(id: String): Book
   }
 
   type Mutation {
@@ -34,6 +38,15 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     books: () => books,
+    book: async (a, args, context) => {
+      const { id } = args;
+
+      const data = books.filter((e) => e.id === id);
+
+      return {
+        ...data[0],
+      };
+    },
   },
   Mutation: {
     insertBook: async (a, b, c) => {
